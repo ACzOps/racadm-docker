@@ -1,4 +1,5 @@
-COMPOSE := docker compose run --rm racadm
+ENV_FILE ?= .env
+COMPOSE := docker compose --env-file $(ENV_FILE) run --rm racadm
 
 .PHONY: help build
 .PHONY: status info sysinfo inventory version sel
@@ -13,6 +14,7 @@ help: ## Show available commands
 		awk 'BEGIN {FS = ":.*##"}; {printf "  \033[36m%-16s\033[0m %s\n", $$1, $$2}'
 	@echo ""
 	@echo "Custom command:  make cmd CMD=\"<racadm_command>\""
+	@echo "Custom env file: make <target> ENV_FILE=.env.node02"
 
 # -- Build --
 
