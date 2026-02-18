@@ -60,6 +60,19 @@ make power-cycle  # hard power cut + immediate power on
 make hard-reset   # forced reboot
 ```
 
+### Multiple servers
+
+To manage several iDRAC hosts, create separate env files (e.g. `.env.node01`, `.env.node02`) and pass `ENV_FILE`:
+
+```bash
+make status ENV_FILE=.env.node02
+make power-off ENV_FILE=.env.node03
+```
+
+### SSL certificate warning
+
+The `--nocertwarn` flag is included in the entrypoint by default, so self-signed iDRAC certificates won't produce security alerts. To re-enable certificate validation, remove `--nocertwarn` from the `entrypoint` in `docker-compose.yml`.
+
 ### Custom commands
 
 Any RACADM command can be passed through `make cmd`:
@@ -71,7 +84,7 @@ make cmd CMD="getversion"
 make cmd CMD="getsel"
 make cmd CMD="getniccfg"
 make cmd CMD="storage get pdisks"
-make cmd CMD="--nocertwarn getsysinfo"
+make cmd CMD="storage get vdisks"
 ```
 
 ### Direct docker compose
