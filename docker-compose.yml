@@ -1,0 +1,17 @@
+services:
+  racadm:
+    image: racadm:latest
+    container_name: racadm
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        IDRAC_TARBALL: "${IDRAC_TARBALL}"
+    entrypoint: ["racadm", "-r", "${IDRAC_IP}", "-u", "${IDRAC_USER}", "-p", "${IDRAC_PASS}"]
+    network_mode: host
+    profiles:
+      - tools
+    restart: "no"
+
+# Usage: docker compose run --rm racadm <command>
+# Example: docker compose run --rm racadm getsysinfo
